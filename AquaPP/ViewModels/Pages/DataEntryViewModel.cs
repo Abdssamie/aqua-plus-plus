@@ -21,7 +21,7 @@ public partial class DataEntryViewModel : PageBase
 {
     private readonly ILogger _logger;
     private readonly ISukiToastManager _toastService;
-    private readonly WaterQualityCsvService _csvService;
+    private readonly WaterQualityReadingCsvService _csvService;
     private readonly IFilePickerService _filePickerService;
     private readonly IUnitConversionService _unitConversionService;
     
@@ -81,7 +81,7 @@ public partial class DataEntryViewModel : PageBase
     public DataEntryViewModel(
         ISukiToastManager toastManager,
         ILogger logger,
-        WaterQualityCsvService csvService, // Injected CSV service
+        WaterQualityReadingCsvService csvService, // Injected CSV service
         IFilePickerService filePickerService, // Injected FilePicker service
         IUnitConversionService unitConversionService)
         : base("Data Entry", "fa-solid fa-database", 3)

@@ -145,9 +145,10 @@ public partial class App : Application
         
         
         collection.AddSingleton<IUrlService, UrlService>();
-        collection.AddSingleton<WaterQualityCsvService>(); // Register WaterQualityCsvService
+        collection.AddSingleton<WaterQualityReadingCsvService>(); // Register WaterQualityReadingCsvService
         collection.AddSingleton<IFilePickerService, FilePickerService>(); // Register IFilePickerService
         collection.AddSingleton<IUnitConversionService, UnitConversionService>(); // Register IFilePickerService
+        collection.AddSingleton<UserPreferencesService>();
         
         collection.AddSingleton<PageNavigationService>();
         collection.AddSingleton<ISukiToastManager, SukiToastManager>();
