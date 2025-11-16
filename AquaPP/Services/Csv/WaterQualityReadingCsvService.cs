@@ -15,7 +15,7 @@ using ILogger = Serilog.ILogger;
 
 namespace AquaPP.Services.Csv;
 
-public class WaterQualityCsvService
+public class WaterQualityReadingCsvService
 {
     private readonly ILogger _logger;
     private readonly IUnitConversionService _unitConversionService;

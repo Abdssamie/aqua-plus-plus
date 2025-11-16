@@ -1,44 +1,42 @@
+using System;
 using System.IO;
 using System.Text.Json;
 using AquaPP.Models;
 
-namespace AquaPP.Services
+namespace AquaPP.Services;
+
+public class UserPreferencesService
 {
-    public class UserPreferencesService
+    private readonly string _filePath;
+    private UserPreferences _preferences;
+
+    public UserPreferencesService()
     {
-        private readonly string _preferencesFilePath;
-        private UserPreferences _preferences;
+        var folder = Environment.SpecialFolder.LocalApplicationData;
+        var path = Environment.GetFolderPath(folder);
+        _filePath = Path.Join(path, "user-preferences.json");
 
-        public UserPreferencesService(string preferencesFilePath)
-        {
-            _preferencesFilePath = preferencesFilePath;
-            LoadPreferences();
-        }
+        LoadPreferences();
+    }
 
-        public UserPreferences GetPreferences()
-        {
-            return _preferences;
-        }
+    public UserPreferences Preferences => _preferences;
 
-        public void SavePreferences(UserPreferences preferences)
+    private void LoadPreferences()
+    {
+        if (File.Exists(_filePath))
         {
-            _preferences = preferences;
-            var jsonString = JsonSerializer.Serialize(_preferences, new JsonSerializerOptions { WriteIndented = true });
-            System.IO.File.WriteAllText(_preferencesFilePath, jsonString);
+            var json = File.ReadAllText(_filePath);
+            _preferences = JsonSerializer.Deserialize<UserPreferences>(json);
         }
+        else
+        {
+            _preferences = new UserPreferences();
+        }
+    }
 
-        private void LoadPreferences()
-        {
-            if (System.IO.File.Exists(_preferencesFilePath))
-            {
-                var jsonString = System.IO.File.ReadAllText(_preferencesFilePath);
-                _preferences = JsonSerializer.Deserialize<UserPreferences>(jsonString);
-            }
-            else
-            {
-                _preferences = new UserPreferences();
-                SavePreferences(_preferences); // Create the file with default preferences
-            }
-        }
+    public void SavePreferences()
+    {
+        var json = JsonSerializer.Serialize(_preferences);
+        File.WriteAllText(_filePath, json);
     }
 }
